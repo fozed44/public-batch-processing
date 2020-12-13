@@ -1,4 +1,4 @@
-namespace TssProcessContracts.Types.Dto {
+namespace Tss.Process.Contracts.Types.Dto {
     public class StepMetadataDto {
         public long   StepMetadataId    { get; set; }
         public long   ProcessMetadataId { get; set; }

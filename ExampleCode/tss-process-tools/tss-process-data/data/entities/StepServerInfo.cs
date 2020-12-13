@@ -1,6 +1,6 @@
 using System;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Entities {
     public class StepServiceInfo {
         public long     StepServiceInfoId { get; set; }
         public string   Url               { get; set; }

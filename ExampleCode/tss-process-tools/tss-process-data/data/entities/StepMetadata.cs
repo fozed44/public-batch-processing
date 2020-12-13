@@ -1,7 +1,7 @@
 using AutoMapper;
-using Tss_Process_Core.Contracts.Types;
+using Tss.Process.Contracts.Types.Dto;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Entities {
     public class StepMetadata {
         public long   StepMetadataId    { get; set; }
         public long   ProcessMetadataId { get; set; }
@@ -18,6 +18,6 @@ namespace Tss_Process_Data.Data {
             );
 
         public StepMetadataDto CreateDto()
-            => _mapper.Map<StepMetadataDto>(this)
+            => _mapper.Map<StepMetadataDto>(this);
     }
 }

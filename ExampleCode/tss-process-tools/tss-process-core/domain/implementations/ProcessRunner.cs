@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TssProcess.Data;
 
-namespace TssProcess {
+namespace Tss.Process {
     public class ProcessRunner {
 
         #region Fields

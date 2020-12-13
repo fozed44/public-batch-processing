@@ -1,12 +1,13 @@
-using TssProcess.Data.Entities;
+using Tss.Process.Contracts.Interface;
+using Tss.Process.Contracts.Types.Dto;
 
-namespace TssProcessCore.Contracts.Interface {
+namespace Tss.Process.Core.Contracts.Interface {
 
     /// <summary>
     /// Builds a ProcessMetadata object from a given implementation of
     /// IProcessDefinition.
     /// </summary>
     public interface IProcessMetadataBuilder {
-        ProcessMetadata BuildProcessMetadata(IProcessDefinition processDefinition);
+        ProcessMetadataDto BuildProcessMetadata(IProcessDefinition processDefinition);
     }
 }

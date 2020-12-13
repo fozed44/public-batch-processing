@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
-using Tss_Process_Core.Contracts.Types.Dto;
+using Tss.Process.Contracts.Types.Dto;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Entities {
     public class ProcessMetadata {
         public long     ProcessMetadataId     { get; set; }
         public long     StepServiceInfoId     { get; set; }
@@ -13,7 +13,8 @@ namespace Tss_Process_Data.Data {
         public bool     AllowMultiplePerCycle { get; set; }
         public DateTime Created               { get; set; }
         public string   Version               { get; set; } 
-        public List<StepMetadata> Steps       { get; set; }
+
+        public List<StepMetadata> Steps           { get; set; }
         public StepServiceInfo    StepServiceInfo { get; set; }
 
         private static Mapper _mapper 

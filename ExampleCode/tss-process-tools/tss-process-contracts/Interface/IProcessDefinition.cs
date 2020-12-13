@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Tss.Process.Contracts.Types.Info;
 
-namespace TssProcessContracts.Interface {
+namespace Tss.Process.Contracts.Interface {
     public interface IProcessDefinition {
-        ProcessMetadataDto    ProcessMetadata { get; } 
-        List<IStepDefinition> Steps           { get; }
+        ProcessInfo    ProcessInfo { get; } 
+        List<StepInfo> Steps       { get; }
     }
 }

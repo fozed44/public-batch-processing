@@ -1,8 +1,6 @@
 using System;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Entities {
     public class StepExecution {
         public long      StepExecutionId    { get; set; }
         public long      StepMetadataId     { get; set; }

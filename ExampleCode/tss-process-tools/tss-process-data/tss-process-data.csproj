@@ -14,5 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../tss-process-core/tss-process-core.csproj" />
+    <ProjectReference Include="../tss-process-contracts/tss-process-contracts.csproj" />
   </ItemGroup>
 </Project>

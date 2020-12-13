@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Tss.Process.Data.Entities;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Context {
 
     public class ProcessContext : DbContext {
 

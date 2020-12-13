@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Tss_Process_Data.Data {
+namespace Tss.Process.Data.Entities {
     public class ProcessExecution {
         public long      ProcessExecutionId     { get; set; }
         public long      ProcessMetadataId      { get; set; }
