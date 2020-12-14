@@ -2,7 +2,7 @@ using System;
 using log4net;
 using Tss.Process.Contracts.Interface;
 using Tss.Process.Contracts.Types.Dto;
-using Tss.Process.Core.Contracts.Interface;
+using Tss.Process.Core.Interface;
 
 namespace Tss.Process.Core.Domain.Implementations {
 
@@ -30,17 +30,7 @@ namespace Tss.Process.Core.Domain.Implementations {
 
        #region IProcessMetadataBuilder
         public ProcessMetadataDto BuildProcessMetadata(IProcessDefinition processDefinition) {
-
-            if(processDefinition.ProcessMetadataDto.ProcessMetadataId != 0)
-                throw new ArgumentException($"{nameof(ProcessMetadataDto.ProcessMetadataId)} must be 0.");
-                
-            if(processDefinition.ProcessMetadataDto.StepServiceInfoId != 0)
-                throw new ArgumentException($"{nameof(ProcessMetadataDto.StepServiceInfoId)} must be 0.");
-
-            return new ProcessMetadataDto {
-                Name        = processDefinition.ProcessMetadataDto.Name,
-                Description = processDefinition.ProcessMetadataDto.Description
-            };
+            throw new NotImplementedException();
         }
 
        #endregion IProcessMetadataBuilder

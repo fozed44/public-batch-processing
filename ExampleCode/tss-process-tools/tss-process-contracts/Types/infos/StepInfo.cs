@@ -16,5 +16,8 @@ namespace Tss.Process.Contracts.Types.Info {
         public int    Ordinal           { get; set; }
         public string InputTypename     { get; set; }
         public string OutputTypename    { get; set; }
+        
+        public new StepInfo MemberwiseClone() 
+            => (StepInfo)MemberwiseClone();
     }
 }

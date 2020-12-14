@@ -17,5 +17,8 @@ namespace Tss.Process.Contracts.Types.Info {
         public bool     AllowMultiplePerCycle { get; set; }
         public DateTime Created               { get; set; }
         public string   Version               { get; set; } 
+
+        public new ProcessInfo MemberwiseClone() 
+            => (ProcessInfo)base.MemberwiseClone();
     }
 }

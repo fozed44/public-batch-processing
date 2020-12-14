@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace Tss.Process.Contracts.Types.Info {
 
     /// <summary>
-    /// ServiceInfo
+    /// StepServiceInfo
     ///
     ///     Used in process definitions to define a process.
     ///
@@ -10,8 +12,11 @@ namespace Tss.Process.Contracts.Types.Info {
     ///     servers. Because of that, they do not require the db keys
     ///     defined in the metadata or entities.
     /// </summary>
-    public class ServiceInfo {
+    public class StepServiceInfo {
         public string Name        { get; set; }
         public string Description { get; set; }
+
+        public new StepServiceInfo MemberwiseClone()
+            => (StepServiceInfo)base.MemberwiseClone();
     }
 }

@@ -1,7 +1,7 @@
 using Tss.Process.Contracts.Interface;
 using Tss.Process.Contracts.Types.Dto;
 
-namespace Tss.Process.Core.Contracts.Interface {
+namespace Tss.Process.Core.Interface {
 
     /// <summary>
     /// Builds a ProcessMetadata object from a given implementation of

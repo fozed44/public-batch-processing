@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Tss.Process.Contracts.Types.Dto;
 
-namespace Tss.Process.Core.Contracts.Interface {
+namespace Tss.Process.Core.Interface {
 
     /// <summary>
     /// Enumerate ProcessMetadata objects from assemblies, or from all of

@@ -1,5 +1,6 @@
 using System;
 using log4net;
+using Tss.Process.Contracts.Interface;
 
 namespace TssProcess {
 
@@ -12,44 +13,34 @@ namespace TssProcess {
 
         #region Fields
 
-        private readonly IProcessControllerApiClient _processControllerClient;
-        private readonly ILog                        _log;
+        private readonly IProcessControllerApi _processControllerApi;
+        private readonly ILog                  _log;
 
         #endregion Fields
 
         #region ctor
 
         public StepRunner (
-            IProcessControllerApiClient client,
-            ILog                        log
+            IProcessControllerApi client,
+            ILog                  log
         ) {
-            _processControllerClient = client;
-            _log                     = log;
+            _processControllerApi = client;
+            _log                  = log;
         }
+
+        #endregion ctor 
+
         #region Public
+
 
         /// <summary>
         /// Run a step on behalf of the process controller.
         /// The process controller will have already created a new step exectuion db object.
         /// </summary>
         public string RunStep(long stepExecutionId, string input) {
-
-            _log?.Info($"Begin execution of step {stepMetaDataId}");
-
-            var stepDefinition = GetStepDefinition(stepMetaDataId);
-
-            // Note:
-            try {
-
-                _processControllerClient.NotifiyBeginStepExecution(stepExecution);
-
-                var result = ExecuteStep(stepExecution)
-
-                _processControllerClient.NotifyStepExecutionComplete(stepExecution, result);
-            } catch(Exception ex) {
-                _processControllerClient.NotifyStepExecutionFail(ex);
-            }
+            throw new NotImplementedException();
         }
+
         #endregion Public
     }
 }

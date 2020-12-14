@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tss.Process.Contracts.Interface;
+using Tss.Process.Data.Context;
+using Tss.Process.Data.Entities;
 
 namespace Tss.Process {
     public class ProcessRunner {
@@ -84,12 +87,7 @@ namespace Tss.Process {
         /// that are currently running. 
         /// </summary>
         private List<ProcessExecution> GetCurrentExecutions(IProcessDefinition processDefinition, long cycleId) {
-            using(var context = _processContextGenerator()) {
-                return context.ProcessExecution.Where(x =>
-                    x.ProcessMetadataId == processDefinition.ProcessMetadata.ProcessMetadataId
-                 && x.End != null
-                ).ToList();
-            }
+            throw new NotImplementedException();
         }
     
         private void ValidateConcurrentExecution(IProcessDefinition processDefinition) {

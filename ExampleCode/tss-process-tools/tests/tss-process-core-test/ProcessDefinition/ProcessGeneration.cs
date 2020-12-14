@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tss.Process.Contracts.Interface;
+using Tss.Process.Contracts.Types.Info;
+using Tss.Process.Data.Context;
+using Tss.Process.Data.Entities;
 using TssProcess;
 using TssProcess.Data;
 
@@ -16,7 +20,7 @@ namespace tss_process_core_test {
     }
 
     class ExampleProcessDefinition : IProcessDefinition {
-        public ProcessMetadata ProcessMetadata { get; } = new ProcessMetadata {
+        public ProcessInfo ProcessInfo { get; } = new ProcessInfo {
             AllowMultiple         = true,
             AllowMultiplePerCycle = false,
             Name                  = "example-name",
@@ -24,8 +28,8 @@ namespace tss_process_core_test {
         };
 
         public List<IStepDefinition> Steps { get; } = new List<IStepDefinition> {
-            new StepDefinition<TestInputType, TestOutputType> {
-                StepMetadata = new StepMetadata {
+            new DefaultStepDefinition<TestInputType, TestOutputType> {
+                StepInfo = new StepInfo {
                     Description    = "example step description",
                     Ordinal        = 0,
                     InputTypename  = typeof(TestInputType).Name,
@@ -40,8 +44,8 @@ namespace tss_process_core_test {
                     };
                 }
             },
-            new StepDefinition<TestInputType, TestOutputType> {
-                StepMetadata = new StepMetadata {
+            new DefaultStepDefinition<TestInputType, TestOutputType> {
+                StepInfo = new StepInfo {
                     Description    = "example step description",
                     Ordinal        = 1,
                     InputTypename  = typeof(TestInputType).Name,
@@ -65,12 +69,12 @@ namespace tss_process_core_test {
 
         [TestMethod]
         public void Database_is_created() {
-            using (var context = new TssProcess.Data.ProcessContext("Server=localhost;Database=Process;user id=sa;Password=Password@123")) {
+            using (var context = new ProcessContext("Server=localhost;Database=Process;user id=sa;Password=Password@123")) {
                 context.ProcessMetadata.Add(new ProcessMetadata {
-                    AllowMultiple = true,
+                    AllowMultiple         = true,
                     AllowMultiplePerCycle = false,
-                    Name = "example-name",
-                    Description = "Example Description"
+                    Name                  = "example-name",
+                    Description           = "Example Description"
                 });
                 context.SaveChanges();
             }
