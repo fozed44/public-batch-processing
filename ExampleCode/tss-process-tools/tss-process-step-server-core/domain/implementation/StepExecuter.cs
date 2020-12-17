@@ -4,14 +4,14 @@ using log4net;
 using Tss.Process.Contracts.Interface;
 using Tss.Process.StepServer.Core.Interface;
 
-namespace Tss.Process.Step.Server.Core {
+namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
     /// <summary>
     /// StepExecuter
     ///
     /// Executer a step given a IStepDefinition describing that step.
     /// </summery>
-    public class StepExecuter : IStepExecuter {
+    public class StepExecuter<tInput,tOutput> : IStepExecuter {
 
        #region Fields
 
@@ -26,7 +26,7 @@ namespace Tss.Process.Step.Server.Core {
         }
 
         public StepExecuter()
-            : this(LogManager.GetLogger(typeof(StepExecuter))){}
+            : this(LogManager.GetLogger(typeof(StepExecuter<tOutput, tInput>))){}
 
        #endregion
 
@@ -43,18 +43,17 @@ namespace Tss.Process.Step.Server.Core {
 
        #region Internal
 
-        internal object DeserializeInput(IStepDefinition stepDefinition, string input) {
+        internal tInput DeserializeInput(IStepDefinition stepDefinition, string input) {
             // Type.GetType and JsonSerializer.Deserialize have decent
             // error reporting so we don't really need to wrap these
             // calls.
-            var type   = Type.GetType(stepDefinition.StepInfo.InputTypename);
-            var result = JsonSerializer.Deserialize(input, type);
+            var result = (tInput)JsonSerializer.Deserialize(input, typeof(tInput));
 
             _log?.Debug($"Deserialized input {input}.");
             return result;
         }
     
-        internal string SerializeOutput(object toSerialize) {
+        internal string SerializeOutput(tOutput toSerialize) {
             _log?.Debug($"Serialize {toSerialize}");
 
             var result = JsonSerializer.Serialize(toSerialize);
@@ -64,25 +63,25 @@ namespace Tss.Process.Step.Server.Core {
             return result;
         }
 
-        internal Func<object, object>  GetFunc(IStepDefinition stepDefinition) {
+        internal Func<tInput, tOutput> GetFunc(IStepDefinition stepDefinition) {
             _log?.Debug($"Locating step function for {stepDefinition.StepInfo.Name}");
 
             var stepDefinitionType = stepDefinition.GetType();
 
-            var funcProperty = stepDefinitionType.GetProperty(nameof(IStepDefinition<object, object>.Func));
+            var funcProperty       = stepDefinitionType.GetProperty(nameof(IStepDefinition<tInput, tOutput>.Func));
 
             _log?.Debug($"Located {funcProperty}");
 
-            return (Func<object, object>)funcProperty.GetValue(stepDefinition);
+            var result = (Func<tInput, tOutput>)funcProperty.GetValue(stepDefinition);
+            return result;
         }
 
-        internal object InvokeFunc(Func<object, object> func, object @param) {
+        internal tOutput InvokeFunc(Func<tInput, tOutput> func, tInput @param) {
             _log?.Debug($"Execute Func.");
             var result = func.Invoke(@param);
 
             if(result == null)
                _log?.Warn("Null result returned from step func.");
-
             return result;
         }
 

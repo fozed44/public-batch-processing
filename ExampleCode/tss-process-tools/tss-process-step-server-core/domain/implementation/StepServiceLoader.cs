@@ -8,7 +8,7 @@ using Tss.Process.Contracts.Interface;
 using Tss.Process.Contracts.Types.Dto;
 using Tss.Process.Contracts.Types.Info;
 
-namespace Tss.Process.StepServer.Core.Implementation {
+namespace Tss.Process.StepServer.Core.Domain.Implementation {
     public class StepServiceLoader : IStepServiceLoader {
 
         #region Fields
