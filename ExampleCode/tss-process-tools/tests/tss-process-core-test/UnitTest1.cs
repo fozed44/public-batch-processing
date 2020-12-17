@@ -8,6 +8,7 @@ namespace tss_process_core_test
         [TestMethod]
         public void TestMethod1()
         {
+            throw new System.Exception("test");
         }
     }
 }

@@ -1,5 +1,5 @@
 using System.Reflection;
-using Tss.Process.Contracts.Types.Info;
+using Tss.Process.Contracts.Types.Dto;
 
 namespace Tss.Process.StepServer.Core {
 
@@ -10,7 +10,7 @@ namespace Tss.Process.StepServer.Core {
     ///
     /// </summary>
     public interface IStepServiceLoader {
-        StepServiceInfo LoadService(Assembly assembly);
-        StepServiceInfo LoadService(string pathName);
+        StepServicePackageDto LoadService(Assembly assembly);
+        StepServicePackageDto LoadService(string pathName);
     } 
 }

@@ -9,7 +9,7 @@ using Tss.Process.Contracts.Types.Dto;
 using Tss.Process.Contracts.Types.Info;
 
 namespace Tss.Process.StepServer.Core.Implementation {
-    public class DefaultStepServiceLoader : IStepServiceLoader {
+    public class StepServiceLoader : IStepServiceLoader {
 
         #region Fields
 
@@ -21,7 +21,7 @@ namespace Tss.Process.StepServer.Core.Implementation {
 
         #region ctor
 
-        public DefaultStepServiceLoader(
+        public StepServiceLoader(
             ILog   log,
             string serviceName,
             string serviceDescription
@@ -31,11 +31,11 @@ namespace Tss.Process.StepServer.Core.Implementation {
             _serviceDescription = serviceDescription;
         }
 
-        public DefaultStepServiceLoader(
+        public StepServiceLoader(
             string serviceName,
             string serviceDescription
         ) : this (
-            LogManager.GetLogger(typeof(DefaultStepServiceLoader)),
+            LogManager.GetLogger(typeof(StepServiceLoader)),
             serviceName,
             serviceDescription
         ) {}
@@ -46,28 +46,25 @@ namespace Tss.Process.StepServer.Core.Implementation {
         #region IStepServiceLoader
 
         public StepServicePackageDto LoadService(Assembly assembly) {
-
             if(assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
 
-            return new StepServicePackageDto {
-                ServiceInfo = new StepServiceInfo {
-                    Name        = _serviceName,
-                    Description = _serviceDescription,
-                },
-                Processes = EnumerateProcessPackages(assembly)
-            };
+            return BuildStepServicePackage(EnumerateProcessPackages(assembly));
         }
 
-        public StepServiceInfo LoadService(string pathName) {
+        public StepServicePackageDto LoadService(string pathName) {
             if(!Directory.Exists(pathName))
                 throw new ArgumentException($"{nameof(pathName)} does not exist.");
 
+            var processPackages = new List<ProcessPackageDto>();
 
 
             foreach(var file in Directory.GetFiles(pathName, "*.dll")) {
-                
+                var assembly = Assembly.LoadFile(file);
+                processPackages.AddRange(EnumerateProcessPackages(assembly));
             }
+
+            return BuildStepServicePackage(processPackages);
         }
 
         #endregion 
@@ -96,6 +93,16 @@ namespace Tss.Process.StepServer.Core.Implementation {
                 Steps       = processDefinition.Steps.Select(x => x.StepInfo.MemberwiseClone())
             };
         }
+
+        private StepServicePackageDto BuildStepServicePackage(IEnumerable<ProcessPackageDto> packageDtos) {
+            return new StepServicePackageDto {
+                ServiceInfo = new StepServiceInfo {
+                    Name        = _serviceName,
+                    Description = _serviceDescription,
+                },
+                Processes = packageDtos 
+            };
+        } 
 
         #endregion 
     }

@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>tss_process_test_common</RootNamespace>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\tss-process-step-server-core\tss-process-step-server-core.csproj" />
+    <ProjectReference Include="..\..\tss-process-contracts\tss-process-contracts.csproj" />
+  </ItemGroup>
+
+</Project>
