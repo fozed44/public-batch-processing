@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tss-process-server-core-tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tss-process-test-common", "tests\tss-process-test-common\tss-process-test-common.csproj", "{E0B2BB98-90C9-42ED-8CEE-564D75402A5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tss-process-api-client", "tss-process-api-client\tss-process-api-client.csproj", "{CA6C7727-7DC0-48C5-A7F9-59557C883A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -144,6 +146,18 @@ Global
 		{E0B2BB98-90C9-42ED-8CEE-564D75402A5E}.Release|x64.Build.0 = Release|Any CPU
 		{E0B2BB98-90C9-42ED-8CEE-564D75402A5E}.Release|x86.ActiveCfg = Release|Any CPU
 		{E0B2BB98-90C9-42ED-8CEE-564D75402A5E}.Release|x86.Build.0 = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|x64.Build.0 = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA6C7727-7DC0-48C5-A7F9-59557C883A80}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E78CB412-0E62-4C78-9608-1E66BB1DBCBF} = {ADAA41F2-BB14-49A8-B78E-4133A700EDDF}

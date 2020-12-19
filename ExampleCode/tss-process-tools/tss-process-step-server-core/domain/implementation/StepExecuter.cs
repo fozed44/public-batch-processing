@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using log4net;
 using Tss.Process.Contracts.Interface;
@@ -34,8 +35,8 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
         public string Execute(IStepDefinition stepDefinition, string input) {
             var deserializedInput = DeserializeInput(stepDefinition, input);
-            var func   = GetFunc(stepDefinition);
-            var result = InvokeFunc(func, deserializedInput);
+            var func              = GetFunc(stepDefinition);
+            var result            = InvokeFunc(func, deserializedInput);
             return SerializeOutput(result);
         }
 
@@ -72,8 +73,8 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
             _log?.Debug($"Located {funcProperty}");
 
-            var result = (Func<tInput, tOutput>)funcProperty.GetValue(stepDefinition);
-            return result;
+            var uncastResult = funcProperty.GetValue(stepDefinition);
+            return VerifiedFuncCast(uncastResult, stepDefinition);
         }
 
         internal tOutput InvokeFunc(Func<tInput, tOutput> func, tInput @param) {
@@ -83,6 +84,29 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             if(result == null)
                _log?.Warn("Null result returned from step func.");
             return result;
+        }
+
+        /// <summary>
+        /// Throw a ValidationException if the StepDefinition's Func type parameters 
+        /// do not match the type paramters of this StepExecuter.
+        /// </summary>
+        internal Func<tInput, tOutput> VerifiedFuncCast(
+            object          stepFunc,
+            IStepDefinition stepDefinition
+        ) {
+            var funcType = stepFunc.GetType();
+            
+            var typeArgs = funcType.GetGenericArguments();
+
+            if(typeArgs[0] != typeof(tInput)
+            || typeArgs[1] != typeof(tOutput))
+                throw new ValidationException(
+                   $"validation exception: the generic type parameters of this executer " +
+                   $"({typeof(tInput).Name}, {typeof(tOutput).Name}) do not match" +
+                   $"the signature of the stepdefinition func ({typeArgs[0].Name}, {typeArgs[1].Name})." 
+                );
+
+            return (Func<tInput, tOutput>)stepFunc;
         }
 
        #endregion

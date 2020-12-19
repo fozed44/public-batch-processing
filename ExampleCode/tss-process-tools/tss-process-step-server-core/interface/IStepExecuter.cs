@@ -8,6 +8,6 @@ namespace Tss.Process.StepServer.Core.Interface {
     ///
     /// </summary>
     public interface IStepExecuter {
-        string Execute(IStepDefinition stepDefinition, string input);
+        string Execute(IStepDefinition stepDefinition, string input);        
     }
 }

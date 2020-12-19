@@ -11,15 +11,15 @@ using Tss.Process.Contracts.Types.Info;
 namespace Tss.Process.StepServer.Core.Domain.Implementation {
     public class StepServiceLoader : IStepServiceLoader {
 
-        #region Fields
+       #region Fields
 
         private readonly ILog   _log;
         private readonly string _serviceName;
         private readonly string _serviceDescription;
 
-        #endregion
+       #endregion
 
-        #region ctor
+       #region ctor
 
         public StepServiceLoader(
             ILog   log,
@@ -40,10 +40,9 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             serviceDescription
         ) {}
 
-        #endregion 
+       #endregion 
 
-
-        #region IStepServiceLoader
+       #region IStepServiceLoader
 
         public StepServicePackageDto LoadService(Assembly assembly) {
             if(assembly == null)
@@ -67,10 +66,9 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             return BuildStepServicePackage(processPackages);
         }
 
-        #endregion 
+       #endregion 
 
-
-        #region Private
+       #region Private
 
         private IEnumerable<IProcessDefinition> EnumerateProcessDefinitions(Assembly assembly){
             return assembly
@@ -104,6 +102,6 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             };
         } 
 
-        #endregion 
+       #endregion 
     }
 }
