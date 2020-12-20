@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Tss.Process.Contracts.Types.Dto;
 
 namespace Tss.Process.Contracts.Interface {
@@ -8,6 +9,6 @@ namespace Tss.Process.Contracts.Interface {
         /// method when the step server starts up, allowing the ProcessServer knowledge
         /// of the steps and processes defined by the step server.
         /// </summary>
-        string PublishStepServerPackage(StepServicePackageDto stepServicePackageDto);
+        Task<string> PublishStepServerPackage(StepServicePackageDto stepServicePackageDto);
     }
 }

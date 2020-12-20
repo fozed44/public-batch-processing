@@ -3,7 +3,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using log4net;
 using Tss.Process.Contracts.Interface;
-using Tss.Process.StepServer.Core.Interface;
+using Tss.Process.StepServer.Domain.Interface;
+
 namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
     internal class StepExecuterFactory : IStepExecuterFactory {
@@ -31,7 +32,7 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             var signature = GetFuncSignatureTypes(stepDefinition);
             
             var genericType = typeof(StepExecuter<,>).MakeGenericType(signature.inputType, signature.outputType);
-            return (IStepExecuter)Activator.CreateInstance(genericType);
+            return (IStepExecuter)Activator.CreateInstance(genericType, stepDefinition);
         }
 
        #endregion
@@ -68,8 +69,8 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
                 $"The implementation of IStepDefinition is not correct."
             );
         }
-       #endregion
 
+       #endregion
 
     }
 }

@@ -7,8 +7,17 @@ using log4net;
 using Tss.Process.Contracts.Interface;
 using Tss.Process.Contracts.Types.Dto;
 using Tss.Process.Contracts.Types.Info;
+using Tss.Process.StepServer.Contracts.Interface;
+using Tss.Process.StepServer.Contracts.Types;
+using Tss.Process.StepServer.Domain.Interface;
+using Tss.Process.SteServer.Domain.Implementation;
 
-namespace Tss.Process.StepServer.Core.Domain.Implementation {
+namespace Tss.Process.StepServer.Domain.Implementation {
+
+    /// <summary>
+    /// The step service loader creates ProcessPackages from IProcessDefinition
+    /// implementations found in an assembly.
+    /// </summary>
     public class StepServiceLoader : IStepServiceLoader {
 
        #region Fields
@@ -44,26 +53,29 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
        #region IStepServiceLoader
 
-        public StepServicePackageDto LoadService(Assembly assembly) {
+        public LoadServiceResult LoadService(Assembly assembly) {
             if(assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
 
-            return BuildStepServicePackage(EnumerateProcessPackages(assembly));
+            var processDefinitions = EnumerateProcessDefinitions(assembly);
+
+            return new LoadServiceResult {
+                StepServicePackage = BuildStepServicePackage(processDefinitions),
+                StepRunner         = CreateStepRunner(processDefinitions)
+            };
         }
 
-        public StepServicePackageDto LoadService(string pathName) {
+        public LoadServiceResult LoadService(string pathName) {
             if(!Directory.Exists(pathName))
                 throw new ArgumentException($"{nameof(pathName)} does not exist.");
 
-            var processPackages = new List<ProcessPackageDto>();
+            var processDefinitions = EnumerateProcessDefinitions(pathName);
 
-
-            foreach(var file in Directory.GetFiles(pathName, "*.dll")) {
-                var assembly = Assembly.LoadFile(file);
-                processPackages.AddRange(EnumerateProcessPackages(assembly));
-            }
-
-            return BuildStepServicePackage(processPackages);
+            return new LoadServiceResult {
+                StepServicePackage = BuildStepServicePackage(processDefinitions),
+                StepRunner         = CreateStepRunner(processDefinitions)
+            };
+            
         }
 
        #endregion 
@@ -79,10 +91,33 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
                 .Select(x => x as IProcessDefinition);
         }
 
-        private IEnumerable<ProcessPackageDto> EnumerateProcessPackages(Assembly assembly){
-            return 
-                EnumerateProcessDefinitions(assembly)
-                    .Select(x => GetProcessPackage(x));
+        private IEnumerable<IProcessDefinition> EnumerateProcessDefinitions(string pathName) {
+            var processDefinitions = new List<IProcessDefinition>();
+
+            foreach(var file in Directory.GetFiles(pathName, "*.dll")) {
+                var assembly = Assembly.LoadFile(file);
+                processDefinitions.AddRange(EnumerateProcessDefinitions(assembly));
+            }
+
+            return processDefinitions;
+        }
+
+        private IStepExecuterCache CreateStepExecuterCache(IEnumerable<IProcessDefinition> processDefinitions){
+            var result = new StepExecuterCache();
+
+            foreach(var processDefinition in processDefinitions)
+                result.CacheStepDefinitions(processDefinition.Steps);
+
+            return result;
+        }
+
+        private IStepRunner CreateStepRunner(IEnumerable<IProcessDefinition> processDefinitions) {
+            return new StepRunner(CreateStepExecuterCache(processDefinitions));
+        }
+
+        private IEnumerable<ProcessPackageDto> GetProcessPackages(IEnumerable<IProcessDefinition> processDefinitions) {
+            return
+                processDefinitions.Select(x => GetProcessPackage(x));            
         }
 
         private ProcessPackageDto GetProcessPackage (IProcessDefinition processDefinition) {
@@ -92,13 +127,13 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
             };
         }
 
-        private StepServicePackageDto BuildStepServicePackage(IEnumerable<ProcessPackageDto> packageDtos) {
+        private StepServicePackageDto BuildStepServicePackage(IEnumerable<IProcessDefinition> processDefinitions) {
             return new StepServicePackageDto {
                 ServiceInfo = new StepServiceInfo {
                     Name        = _serviceName,
                     Description = _serviceDescription,
                 },
-                Processes = packageDtos 
+                Processes = GetProcessPackages(processDefinitions)
             };
         } 
 

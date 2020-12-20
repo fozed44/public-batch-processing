@@ -15,8 +15,7 @@ namespace Tss.Process.ServerCore.Test {
         [TestMethod]
         public void Can_get_result_with_no_exception() {
             var processDefinition = new ExampleProcessDefinition();
-            var stepExecuter      = new StepExecuter<TestInputType, TestOutputType>(); 
-            var func = stepExecuter.GetFunc(processDefinition.Steps.ElementAt(0));
+            var stepExecuter      = new StepExecuter<TestInputType, TestOutputType>(processDefinition.Steps.ElementAt(0));
         }
 
         /// <summary>
@@ -29,9 +28,8 @@ namespace Tss.Process.ServerCore.Test {
             var processDefinition = new ExampleProcessDefinition();
             // Notice that the StepExecuter and has a different output type than
             // ExampleProcessDefinition
-            var stepExecuter      = new StepExecuter<TestInputType, TestInputType>(); 
             Assert.ThrowsException<ValidationException>(() => 
-                stepExecuter.GetFunc(processDefinition.Steps.ElementAt(0))
+                new StepExecuter<TestInputType, TestInputType>(processDefinition.Steps.ElementAt(0))
             );
         }
 
@@ -45,9 +43,8 @@ namespace Tss.Process.ServerCore.Test {
             var processDefinition = new ExampleProcessDefinition();
             // Notice that the StepExecuter and has a different input type than
             // ExampleProcessDefinition
-            var stepExecuter      = new StepExecuter<TestOutputType, TestOutputType>(); 
             Assert.ThrowsException<ValidationException>(() => 
-                stepExecuter.GetFunc(processDefinition.Steps.ElementAt(0))
+                new StepExecuter<TestOutputType, TestOutputType>(processDefinition.Steps.ElementAt(0))
             );
         }
     }

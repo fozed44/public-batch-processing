@@ -3,40 +3,45 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.Json;
 using log4net;
 using Tss.Process.Contracts.Interface;
-using Tss.Process.StepServer.Core.Interface;
+using Tss.Process.StepServer.Domain.Interface;
 
 namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
     /// <summary>
     /// StepExecuter
     ///
-    /// Executer a step given a IStepDefinition describing that step.
+    /// Executes the Func of the IStepDefinition that is used to
+    /// construct the executer.
     /// </summery>
     public class StepExecuter<tInput,tOutput> : IStepExecuter {
 
        #region Fields
 
-        private readonly ILog _log;
+        private readonly ILog                  _log;
+        private readonly Func<tInput, tOutput> _func;
 
        #endregion Fields
 
        #region ctor
 
-        public StepExecuter(ILog log) {
-            _log = log;
+        public StepExecuter(
+            IStepDefinition stepDefinition,
+            ILog            log
+        ) {
+            _log  = log;
+            _func = GetFunc(stepDefinition);
         }
 
-        public StepExecuter()
-            : this(LogManager.GetLogger(typeof(StepExecuter<tOutput, tInput>))){}
+        public StepExecuter(IStepDefinition stepDefinition)
+            : this(stepDefinition, LogManager.GetLogger(typeof(StepExecuter<tOutput, tInput>))){}
 
        #endregion
 
        #region IStepExecuter
 
-        public string Execute(IStepDefinition stepDefinition, string input) {
-            var deserializedInput = DeserializeInput(stepDefinition, input);
-            var func              = GetFunc(stepDefinition);
-            var result            = InvokeFunc(func, deserializedInput);
+        public string Execute(string input) {
+            var deserializedInput = DeserializeInput(input);
+            var result            = InvokeFunc(_func, deserializedInput);
             return SerializeOutput(result);
         }
 
@@ -44,7 +49,7 @@ namespace Tss.Process.StepServer.Core.Domain.Implementation {
 
        #region Internal
 
-        internal tInput DeserializeInput(IStepDefinition stepDefinition, string input) {
+        internal tInput DeserializeInput(string input) {
             // Type.GetType and JsonSerializer.Deserialize have decent
             // error reporting so we don't really need to wrap these
             // calls.

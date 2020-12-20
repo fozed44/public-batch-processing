@@ -1,16 +1,15 @@
 using System.Reflection;
-using Tss.Process.Contracts.Types.Dto;
+using Tss.Process.StepServer.Contracts.Types;
 
-namespace Tss.Process.StepServer.Core {
+namespace Tss.Process.StepServer.Contracts.Interface {
 
     /// <summary>
     /// 
     /// Load service info from an assembly, or from all of the assemblies in
     /// a directory. 
-    ///
     /// </summary>
     public interface IStepServiceLoader {
-        StepServicePackageDto LoadService(Assembly assembly);
-        StepServicePackageDto LoadService(string pathName);
+        LoadServiceResult LoadService(Assembly assembly);
+        LoadServiceResult LoadService(string pathName);
     } 
 }

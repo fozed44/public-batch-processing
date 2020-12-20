@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
