@@ -7,8 +7,8 @@ using log4net;
 using Tss.Process.Contracts.Interface;
 using Tss.Process.Contracts.Types.Dto;
 using Tss.Process.Contracts.Types.Info;
-using Tss.Process.StepServer.Contracts.Interface;
 using Tss.Process.StepServer.Contracts.Types;
+using Tss.Process.StepServer.Core.Contracts.Interface;
 using Tss.Process.StepServer.Domain.Interface;
 using Tss.Process.SteServer.Domain.Implementation;
 
@@ -53,25 +53,25 @@ namespace Tss.Process.StepServer.Domain.Implementation {
 
        #region IStepServiceLoader
 
-        public LoadServiceResult LoadService(Assembly assembly) {
+        public IStepService LoadService(Assembly assembly) {
             if(assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
 
             var processDefinitions = EnumerateProcessDefinitions(assembly);
 
-            return new LoadServiceResult {
+            return new StepService {
                 StepServicePackage = BuildStepServicePackage(processDefinitions),
                 StepRunner         = CreateStepRunner(processDefinitions)
             };
         }
 
-        public LoadServiceResult LoadService(string pathName) {
+        public IStepService LoadService(string pathName) {
             if(!Directory.Exists(pathName))
                 throw new ArgumentException($"{nameof(pathName)} does not exist.");
 
             var processDefinitions = EnumerateProcessDefinitions(pathName);
 
-            return new LoadServiceResult {
+            return new StepService {
                 StepServicePackage = BuildStepServicePackage(processDefinitions),
                 StepRunner         = CreateStepRunner(processDefinitions)
             };

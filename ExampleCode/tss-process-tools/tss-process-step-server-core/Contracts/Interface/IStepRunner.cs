@@ -1,4 +1,4 @@
-namespace Tss.Process.StepServer.Contracts.Interface {
+namespace Tss.Process.StepServer.Core.Contracts.Interface {
 
     /// <summary>
     /// Run the step with the given name.

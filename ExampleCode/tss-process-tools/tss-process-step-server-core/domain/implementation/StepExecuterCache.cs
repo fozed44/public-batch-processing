@@ -29,10 +29,11 @@ namespace Tss.Process.StepServer.Domain.Implementation {
 
         public StepExecuterCache(
             IStepExecuterFactory stepExecuterFactory,
-            ILog log
+            ILog                 log
         ) {
             _stepExecuterFactory = stepExecuterFactory;
             _log                 = log;
+            _cache               = new Dictionary<string, IStepExecuter>();
         }
 
         public StepExecuterCache()

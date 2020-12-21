@@ -1,5 +1,5 @@
 using log4net;
-using Tss.Process.StepServer.Contracts.Interface;
+using Tss.Process.StepServer.Core.Contracts.Interface;
 using Tss.Process.StepServer.Domain.Interface;
 
 namespace Tss.Process.SteServer.Domain.Implementation {
