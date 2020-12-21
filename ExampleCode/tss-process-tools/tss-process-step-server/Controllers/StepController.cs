@@ -7,7 +7,7 @@ namespace TssProcess.Step.Server {
     [Route("Process/[controller]/v1")]
     public class StepController {
 
-        [Route("Execute/{stepName: string}")]
+        [Route("execute/{stepName: string}")]
         public string ExecuteStep(
                        string stepName,
             [FromBody] string input
