@@ -22,31 +22,36 @@ namespace Tss.Process.StepServer.Domain.Implementation {
 
        #region Fields
 
-        private readonly ILog   _log;
-        private readonly string _serviceName;
-        private readonly string _serviceDescription;
-
+        private readonly ILog                  _log;
+        private readonly string                _serviceName;
+        private readonly string                _serviceDescription;
+        private readonly IProcessServiceClient _processServiceClient;
+        
        #endregion
 
        #region ctor
 
         public StepServiceLoader(
-            ILog   log,
-            string serviceName,
-            string serviceDescription
+            string                serviceName,
+            string                serviceDescription,
+            IProcessServiceClient processServiceClient,
+            ILog                  log
         ) {
-            _log                = log;
-            _serviceName        = serviceName;
-            _serviceDescription = serviceDescription;
+            _log                  = log;
+            _serviceName          = serviceName;
+            _serviceDescription   = serviceDescription;
+            _processServiceClient = processServiceClient;
         }
 
         public StepServiceLoader(
-            string serviceName,
-            string serviceDescription
+            string                serviceName,
+            string                serviceDescription,
+            IProcessServiceClient processServiceClient
         ) : this (
-            LogManager.GetLogger(typeof(StepServiceLoader)),
             serviceName,
-            serviceDescription
+            serviceDescription,
+            processServiceClient,
+            LogManager.GetLogger(typeof(StepServiceLoader))
         ) {}
 
        #endregion 
@@ -60,8 +65,10 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             var processDefinitions = EnumerateProcessDefinitions(assembly);
 
             return new StepService {
-                StepServicePackage = BuildStepServicePackage(processDefinitions),
-                StepRunner         = CreateStepRunner(processDefinitions)
+                ProcessControllerNotificationInitiator 
+                    = BuildProcessControllerNotificationInitiator(processDefinitions),
+                StepRunner
+                    = CreateStepRunner(processDefinitions)
             };
         }
 
@@ -72,8 +79,10 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             var processDefinitions = EnumerateProcessDefinitions(pathName);
 
             return new StepService {
-                StepServicePackage = BuildStepServicePackage(processDefinitions),
-                StepRunner         = CreateStepRunner(processDefinitions)
+                ProcessControllerNotificationInitiator
+                    = BuildProcessControllerNotificationInitiator(processDefinitions),
+                StepRunner
+                    = CreateStepRunner(processDefinitions)
             };
             
         }
@@ -136,6 +145,16 @@ namespace Tss.Process.StepServer.Domain.Implementation {
                 Processes = GetProcessPackages(processDefinitions)
             };
         } 
+
+        private IProcessControllerNotificationInitiator BuildProcessControllerNotificationInitiator(
+            IEnumerable<IProcessDefinition> processDefinitions
+        ){
+            var stepServicePackageDto = BuildStepServicePackage(processDefinitions);
+            return new ProcessControllerNotificationInitiator(
+                _processServiceClient,
+                stepServicePackageDto
+            );
+        }
 
        #endregion 
     }

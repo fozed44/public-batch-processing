@@ -7,7 +7,7 @@ using log4net;
 
 namespace Tss.Process.Api.Client.Domain.Implementations {
 
-    public class ProcessClient : IProcessClient {
+    public class ProcessServiceClient : IProcessServiceClient {
 
        #region Fields
 
@@ -17,7 +17,7 @@ namespace Tss.Process.Api.Client.Domain.Implementations {
        #endregion 
 
        #region ctor 
-        public ProcessClient(
+        public ProcessServiceClient(
             string baseUrl,
             string version,
             ILog   log
@@ -30,10 +30,10 @@ namespace Tss.Process.Api.Client.Domain.Implementations {
             _httpClient.BaseAddress = new System.Uri($"{baseUrl}//Process/v{version.TrimStart('v')}");
         }
 
-        public ProcessClient(
+        public ProcessServiceClient(
             string baseUrl,
             string version
-        ) : this(baseUrl, version, LogManager.GetLogger(typeof(ProcessClient))) {}
+        ) : this(baseUrl, version, LogManager.GetLogger(typeof(ProcessServiceClient))) {}
 
 
        #endregion ctor

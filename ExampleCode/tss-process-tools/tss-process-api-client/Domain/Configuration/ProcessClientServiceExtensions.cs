@@ -6,8 +6,8 @@ namespace Tss.Process.Api.Client.Domain.Configuration {
 
      public static class ProcessClientServiceExtensions {
         
-        static public IServiceCollection AddProcessClient(this IServiceCollection serviceCollection, string baseUrl, string hostVersion) {
-            return serviceCollection.AddTransient<IProcessClient>(_ => new ProcessClient(baseUrl, hostVersion));
+        static public IServiceCollection AddProcessServiceClient(this IServiceCollection serviceCollection, string baseUrl, string hostVersion) {
+            return serviceCollection.AddTransient<IProcessServiceClient>(_ => new ProcessServiceClient(baseUrl, hostVersion));
         }
     }    
 }
