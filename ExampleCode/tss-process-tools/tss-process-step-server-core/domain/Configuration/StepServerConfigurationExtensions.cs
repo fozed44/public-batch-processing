@@ -15,26 +15,36 @@ namespace Tss.Process.StepServer.Domain.Configuration {
             string                  assemblyDirectory,
             IProcessServiceClient   processServiceClient
         ) {
-            return serviceCollection.AddTransient<IStepService>(_ =>
-                new StepServiceLoader(
-                    serviceName,
-                    serviceDescription,
-                    processServiceClient
-                ).LoadService(assemblyDirectory)
-            );
+            return serviceCollection.AddTransient<IStepService>(_ => {
+                var result = new StepServiceLoader(
+                        serviceName,
+                        serviceDescription,
+                        processServiceClient
+                    ).LoadService(assemblyDirectory);
+
+                result.ProcessControllerNotificationInitiator.InitiateProcessControllerNotification();
+
+                return result;
+            });
         }
 
         public static IServiceCollection AddStepServer (
             this IServiceCollection serviceCollection
         ) {
             var helpers = new StepHelpers();
-            return serviceCollection.AddTransient<IStepService>(s =>
-                new StepServiceLoader (
-                    helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:name"),
-                    helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:description"),
-                    s.GetRequiredService<IProcessServiceClient>()
-                ).LoadService(helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:assebmly-directory"))
-            );
+            return serviceCollection.AddTransient<IStepService>(s => {
+
+                var result = new StepServiceLoader (
+                        helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:name"),
+                        helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:description"),
+                        s.GetRequiredService<IProcessServiceClient>()
+                    ).LoadService(helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:assebmly-directory"));
+
+                result.ProcessControllerNotificationInitiator.InitiateProcessControllerNotification();
+
+                return result;
+
+            });
         }
     }
 }

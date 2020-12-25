@@ -17,7 +17,7 @@ namespace Tss.Process.Api.Client.Domain.Implementations {
        #endregion 
 
        #region ctor 
-        public ProcessServiceClient(
+        public ProcessServiceClient (
             string baseUrl,
             string version,
             ILog   log
