@@ -3,10 +3,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace Tss.Process.Core.Domain.Implementations {
 
-    public class StepHelpers {
+    public static class Helpers {
         #region public
 
-        public string GetRequiredConfiguration(IConfiguration configuration, string s) {
+        public static string GetRequiredConfiguration(IConfiguration configuration, string s) {
             var result = configuration[s];
 
             if(string.IsNullOrEmpty(result))

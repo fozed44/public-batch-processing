@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Tss.Process.Api.Client.Domain.Configuration;
+using Tss.Process.Core.Domain.Implementations;
 using Tss.Process.StepServer.Domain.Configuration;
 
 namespace tss_process_step_server {
@@ -24,6 +26,10 @@ namespace tss_process_step_server {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "tss_process_step_server", Version = "v1" });
             });
             services.AddStepServer();
+            services.AddProcessServiceClient(
+                Helpers.GetRequiredConfiguration(Configuration, "process-server:url"),
+                Helpers.GetRequiredConfiguration(Configuration, "process-server:version")
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -72,11 +72,11 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             };
         }
 
-        public IStepService LoadService(string pathName) {
-            if(!Directory.Exists(pathName))
-                throw new ArgumentException($"{nameof(pathName)} does not exist.");
+        public IStepService LoadService(string pathname) {
+            if(!Directory.Exists(pathname))
+                throw new ArgumentException($"{nameof(pathname)}: {pathname} -- does not exist.");
 
-            var processDefinitions = EnumerateProcessDefinitions(pathName);
+            var processDefinitions = EnumerateProcessDefinitions(pathname);
 
             return new StepService {
                 ProcessControllerNotificationInitiator

@@ -31,14 +31,13 @@ namespace Tss.Process.StepServer.Domain.Configuration {
         public static IServiceCollection AddStepServer (
             this IServiceCollection serviceCollection
         ) {
-            var helpers = new StepHelpers();
             return serviceCollection.AddTransient<IStepService>(s => {
 
                 var result = new StepServiceLoader (
-                        helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:name"),
-                        helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:description"),
+                        Helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:name"),
+                        Helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:description"),
                         s.GetRequiredService<IProcessServiceClient>()
-                    ).LoadService(helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:assebmly-directory"));
+                    ).LoadService(Helpers.GetRequiredConfiguration(s.GetService<IConfiguration>(), "step-server:assembly-directory"));
 
                 result.ProcessControllerNotificationInitiator.InitiateProcessControllerNotification();
 

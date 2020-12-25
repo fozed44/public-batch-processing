@@ -27,7 +27,7 @@ namespace Tss.Process.Api.Client.Domain.Implementations {
             // The ProcessClient doe not use a HttpClientFactory (does it exist in .NET 5?)
             // Do not create many of these classes.
             _httpClient             = new HttpClient();
-            _httpClient.BaseAddress = new System.Uri($"{baseUrl}//Process/v{version.TrimStart('v')}");
+            _httpClient.BaseAddress = new System.Uri($"{baseUrl.TrimEnd('/')}/Process/v{version.TrimStart('v')}/");
         }
 
         public ProcessServiceClient(
