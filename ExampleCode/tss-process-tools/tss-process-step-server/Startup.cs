@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Tss.Process.Api.Client.Domain.Configuration;
 using Tss.Process.Core.Domain.Implementations;
+using Tss.Process.StepServer.Core.Contracts.Interface;
 using Tss.Process.StepServer.Domain.Configuration;
 
 namespace tss_process_step_server {
@@ -34,8 +35,7 @@ namespace tss_process_step_server {
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "tss_process_step_server v1"));
@@ -47,8 +47,7 @@ namespace tss_process_step_server {
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
+            app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using log4net;
@@ -59,6 +60,12 @@ namespace Tss.Process.StepServer.Domain.Implementation {
         }
 
         public void CacheStepDefinition(IStepDefinition stepDefinition) {
+            if(stepDefinition == null)
+                throw new ArgumentNullException(nameof(stepDefinition));
+
+            if(string.IsNullOrEmpty(stepDefinition.StepInfo.Name))
+                throw new ArgumentException("stepDefinition.StepInfo.Name name property is empty.");
+            
             _log?.Info($"Caching executer for {stepDefinition.StepInfo.Name}");
 
             // By design, the CacheStepDefinition should only be called onece

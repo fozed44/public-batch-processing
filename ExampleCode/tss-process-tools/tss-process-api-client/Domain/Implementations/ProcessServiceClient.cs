@@ -40,7 +40,7 @@ namespace Tss.Process.Api.Client.Domain.Implementations {
 
        #region IProcessClient
 
-        public async Task<string> PublishStepServerPackage(StepServicePackageDto stepServicePackageDto) {
+        public async Task<string> PublishStepServerPackageAsync(StepServicePackageDto stepServicePackageDto) {
             var result = await _httpClient.PostAsJsonAsync("/StepServicePackage", stepServicePackageDto);
 
             return await HandleHttpResponse<string>(result);

@@ -1,3 +1,4 @@
+using Tss.Process.Contracts.Types.Dto;
 using Tss.Process.StepServer.Core.Contracts.Interface;
 
 namespace Tss.Process.StepServer.Contracts.Types {
@@ -7,7 +8,7 @@ namespace Tss.Process.StepServer.Contracts.Types {
     /// a packaged result of a step service package dto and a step cache.
     /// </summary>
     public class StepService : IStepService {
-        public IStepRunner                             StepRunner                             { get; set; }
-        public IProcessControllerNotificationInitiator ProcessControllerNotificationInitiator { get; set; }
+        public IStepRunner          StepRunner             { get; set; }
+        public StepServicePackageDto StepServicePackageDto { get; set; }
     }
 }

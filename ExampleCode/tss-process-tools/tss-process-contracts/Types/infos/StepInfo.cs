@@ -30,6 +30,6 @@ namespace Tss.Process.Contracts.Types.Info {
         public string OutputTypename    { get; set; }
         
         public new StepInfo MemberwiseClone() 
-            => (StepInfo)MemberwiseClone();
+            => (StepInfo)base.MemberwiseClone();
     }
 }

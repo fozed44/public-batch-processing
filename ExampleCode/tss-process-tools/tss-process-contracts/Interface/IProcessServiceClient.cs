@@ -9,6 +9,6 @@ namespace Tss.Process.Contracts.Interface {
         /// method when the step server starts up, allowing the ProcessServer knowledge
         /// of the steps and processes defined by the step server.
         /// </summary>
-        Task<string> PublishStepServerPackage(StepServicePackageDto stepServicePackageDto);
+        Task<string> PublishStepServerPackageAsync(StepServicePackageDto stepServicePackageDto);
     }
 }

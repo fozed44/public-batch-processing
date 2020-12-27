@@ -65,8 +65,8 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             var processDefinitions = EnumerateProcessDefinitions(assembly);
 
             return new StepService {
-                ProcessControllerNotificationInitiator 
-                    = BuildProcessControllerNotificationInitiator(processDefinitions),
+                StepServicePackageDto 
+                    = BuildStepServicePackage(processDefinitions),
                 StepRunner
                     = CreateStepRunner(processDefinitions)
             };
@@ -79,8 +79,8 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             var processDefinitions = EnumerateProcessDefinitions(pathname);
 
             return new StepService {
-                ProcessControllerNotificationInitiator
-                    = BuildProcessControllerNotificationInitiator(processDefinitions),
+                StepServicePackageDto 
+                    = BuildStepServicePackage(processDefinitions),
                 StepRunner
                     = CreateStepRunner(processDefinitions)
             };
@@ -92,15 +92,35 @@ namespace Tss.Process.StepServer.Domain.Implementation {
        #region Private
 
         private IEnumerable<IProcessDefinition> EnumerateProcessDefinitions(Assembly assembly){
-            return assembly
-                .GetExportedTypes()
-                .Where(x => typeof(IProcessDefinition)
-                    .IsAssignableFrom(x)
-                )
-                .Select(x => x as IProcessDefinition);
+            
+            _log?.Info($"Searching {assembly.GetName()} for process definitions.");
+
+            var result = new List<IProcessDefinition>();
+            
+            // We are gong to loop through the assembly's types rather
+            // than use ling so that we can get good logs.
+            foreach(var type in assembly.GetExportedTypes()) {
+
+                // Note: we are just getting the type objects here. We still need
+                // to create instances of these types.
+                if(typeof(IProcessDefinition).IsAssignableFrom(type)) {
+                    _log.Info($"-- Found type {type.Name}");
+
+                    var instance = Activator.CreateInstance(type);
+                    var casted = instance as IProcessDefinition;
+
+                    result.Add(Activator.CreateInstance(type) as IProcessDefinition);
+                }
+            }
+            
+            if(result.Count == 0)
+                _log?.Info("None found");
+
+            return result;
         }
 
         private IEnumerable<IProcessDefinition> EnumerateProcessDefinitions(string pathName) {
+            _log?.Info($"Searching for process definitions in {pathName}");
             var processDefinitions = new List<IProcessDefinition>();
 
             foreach(var file in Directory.GetFiles(pathName, "*.dll")) {
@@ -114,8 +134,10 @@ namespace Tss.Process.StepServer.Domain.Implementation {
         private IStepExecuterCache CreateStepExecuterCache(IEnumerable<IProcessDefinition> processDefinitions){
             var result = new StepExecuterCache();
 
-            foreach(var processDefinition in processDefinitions)
+            foreach(var processDefinition in processDefinitions) {
+                _log?.Info($"Caching executers for process {processDefinition.ProcessInfo.Name}");
                 result.CacheStepDefinitions(processDefinition.Steps);
+            }
 
             return result;
         }
@@ -145,16 +167,6 @@ namespace Tss.Process.StepServer.Domain.Implementation {
                 Processes = GetProcessPackages(processDefinitions)
             };
         } 
-
-        private IProcessControllerNotificationInitiator BuildProcessControllerNotificationInitiator(
-            IEnumerable<IProcessDefinition> processDefinitions
-        ){
-            var stepServicePackageDto = BuildStepServicePackage(processDefinitions);
-            return new ProcessControllerNotificationInitiator(
-                _processServiceClient,
-                stepServicePackageDto
-            );
-        }
 
        #endregion 
     }

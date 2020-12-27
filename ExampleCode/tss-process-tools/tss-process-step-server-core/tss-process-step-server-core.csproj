@@ -1,22 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>tss_process_step_server_core</RootNamespace>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="log4net" Version="2.0.12" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="log4net"                            Version="2.0.12"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting"       Version="5.0.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj"/>
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0"/>
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-core\tss-process-core.csproj" />
+    <ProjectReference Include="..\tss-process-core\tss-process-core.csproj"/>
   </ItemGroup>
-
 </Project>

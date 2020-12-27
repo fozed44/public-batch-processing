@@ -20,13 +20,14 @@ namespace Tss.Process.Test.Common {
         public ProcessInfo ProcessInfo { get; } = new ProcessInfo {
             AllowMultiple         = true,
             AllowMultiplePerCycle = false,
-            Name                  = "example-name",
-            Description           = "Example Description"
+            Name                  = "Example Process",
+            Description           = "Example process description."
         };
 
         public IEnumerable<IStepDefinition> Steps { get; } = new List<IStepDefinition> {
             new DefaultStepDefinition<TestInputType, TestOutputType> {
                 StepInfo = new StepInfo {
+                    Name           = "ExampleProcess_step1",
                     Description    = "example step description",
                     Ordinal        = 0,
                     InputTypename  = typeof(TestInputType).Name,
@@ -43,6 +44,7 @@ namespace Tss.Process.Test.Common {
             },
             new DefaultStepDefinition<TestInputType, TestOutputType> {
                 StepInfo = new StepInfo {
+                    Name           = "ExampleProcess_step2",
                     Description    = "example step description",
                     Ordinal        = 1,
                     InputTypename  = typeof(TestInputType).Name,

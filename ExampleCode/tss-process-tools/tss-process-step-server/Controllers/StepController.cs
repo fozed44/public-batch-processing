@@ -25,11 +25,11 @@ namespace TssProcess.Step.Server {
 
        #endregion
 
-        [Route("test")]
+        [HttpGet("test")]
         public string test() 
             => "ok.";
 
-        [Route("execute/{stepName}")]
+        [HttpGet("execution/{stepName}")]
         public string ExecuteStep(
                        string stepName,
             [FromBody] string input
