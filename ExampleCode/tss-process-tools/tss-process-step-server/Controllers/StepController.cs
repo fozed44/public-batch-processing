@@ -29,7 +29,7 @@ namespace TssProcess.Step.Server {
         public string test() 
             => "ok.";
 
-        [HttpGet("execution/{stepName}")]
+        [HttpPut("execution/{stepName}")]
         public string ExecuteStep(
                        string stepName,
             [FromBody] string input
