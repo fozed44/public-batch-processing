@@ -1,12 +1,12 @@
 using Tss.Process.StepServer.Core.Contracts.Interface;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using Tss.Process.Contracts.Interface;
 using log4net;
 using System;
 using System.Threading;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Tss.Process.StepServer.Domain.Implementation {
 
@@ -17,6 +17,7 @@ namespace Tss.Process.StepServer.Domain.Implementation {
         private readonly IProcessServiceClient _processServiceClient;
         private readonly IStepService          _stepService;
         private readonly ILog                  _log;
+        private readonly IConfiguration        _config;
 
        #endregion
 
@@ -25,19 +26,23 @@ namespace Tss.Process.StepServer.Domain.Implementation {
         public ProcessControllerNotificationService (
             IProcessServiceClient processServiceClient,
             IStepService          stepService,
+            IConfiguration        config,
             ILog                  log
         ) {
             _processServiceClient  = processServiceClient;
             _stepService           = stepService;
             _log                   = log;
+            _config                = config;
         }
 
         public ProcessControllerNotificationService (
             IProcessServiceClient processServiceClient,
-            IStepService          stepService
+            IStepService          stepService,
+            IConfiguration        config
         ) : this(
             processServiceClient,
             stepService,
+            config,
             LogManager.GetLogger(typeof(ProcessControllerNotificationService))
         ) {}
 
@@ -46,6 +51,13 @@ namespace Tss.Process.StepServer.Domain.Implementation {
        #region IHostedService
 
         public async Task StartAsync(CancellationToken cancellationToken) {
+            _log?.Info("## (Process controller notification) ## Starting process controller notification service.");
+
+            if(_config?["step-server:process-controller-notification-enabled"]?.ToLower() == "false") {
+                _log?.Info("## (Process controller notification) ## process controller is disabled by connfiguration.");
+                return;
+            }
+
             await NotifyStepServiceAsync();
         }
 
@@ -78,7 +90,7 @@ namespace Tss.Process.StepServer.Domain.Implementation {
             }
         }
  
-        #endregion
+       #endregion
 
     }
 }
