@@ -1,4 +1,8 @@
+using System;
+
 namespace Tss.Process.Contracts.Types.Dto {
+
+    [Obsolete]
     public class StepMetadataDto {
         public long   StepMetadataId    { get; set; }
         public long   ProcessMetadataId { get; set; }

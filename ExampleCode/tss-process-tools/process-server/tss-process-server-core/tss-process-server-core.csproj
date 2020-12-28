@@ -5,4 +5,7 @@
     <RootNamespace>tss_process_server_core</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../../core/tss-process-contracts/tss-process-contracts.csproj"/>
+  </ItemGroup>
 </Project>
