@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj" />
+    <ProjectReference Include="../../core/tss-process-contracts/tss-process-contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

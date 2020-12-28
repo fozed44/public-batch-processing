@@ -13,8 +13,9 @@ namespace Tss.Process.StepServer.Domain.Implementation {
     /// interfaces.
     /// 
     /// IStepExecuterCache is only concerned with the reading of the cache. This
-    /// StepExecuterCache implementation provides the AddStpeDefinition method to
-    /// populate the cache via the injected IStepExecuterFactory implementation.
+    /// StepExecuterCache implementation provides the CacheStepDefinition and 
+    /// CacheStepDefinitions methods to populate the cache via the injected 
+    /// IStepExecuterFactory implementation.
     /// </summary>
     public class StepExecuterCache : IStepExecuterCache {
 

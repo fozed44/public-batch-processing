@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace tss_process_api {
+namespace Tss.Process.ProcessServer {
     public class Program {
         public static void Main(string[] args) {
             CreateHostBuilder(args).Build().Run();

@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\tss-process-step-server-core\tss-process-step-server-core.csproj" />
-    <ProjectReference Include="..\..\tss-process-contracts\tss-process-contracts.csproj" />
+    <ProjectReference Include="../../step-server/tss-process-step-server-core\tss-process-step-server-core.csproj" />
+    <ProjectReference Include="../../core/tss-process-contracts\tss-process-contracts.csproj" />
   </ItemGroup>
 
 </Project>

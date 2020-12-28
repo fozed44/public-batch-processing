@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-test-common\tss-process-test-common.csproj" />
-    <ProjectReference Include="..\..\tss-process-step-server-core\tss-process-step-server-core.csproj" />
+    <ProjectReference Include="../tss-process-test-common/tss-process-test-common.csproj" />
+    <ProjectReference Include="../../step-server/tss-process-step-server-core/tss-process-step-server-core.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,10 +9,10 @@
     <PackageReference Include="Microsoft.Extensions.Hosting"       Version="5.0.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj"/>
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0"/>
+    <ProjectReference Include="../../core/tss-process-contracts/tss-process-contracts.csproj"/>
+    <PackageReference Include="Microsoft.Extensions.Logging"       Version="5.0.0"/>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-core\tss-process-core.csproj"/>
+    <ProjectReference Include="../../core/tss-process-core/tss-process-core.csproj"/>
   </ItemGroup>
 </Project>

@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../tss-process-core/tss-process-core.csproj" />
-    <ProjectReference Include="../../tss-process-contracts/tss-process-contracts.csproj" />
-    <ProjectReference Include="../../tss-process-data/tss-process-data.csproj" />
+    <ProjectReference Include="../../core/tss-process-core/tss-process-core.csproj" />
+    <ProjectReference Include="../../core/tss-process-contracts/tss-process-contracts.csproj" />
+    <ProjectReference Include="../../core/tss-process-data/tss-process-data.csproj" />
   </ItemGroup>
 
 </Project>

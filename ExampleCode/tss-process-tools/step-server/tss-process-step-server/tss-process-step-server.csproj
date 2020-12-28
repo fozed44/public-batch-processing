@@ -13,9 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\tss-process-step-server-core\tss-process-step-server-core.csproj" />
-    <ProjectReference Include="..\tss-process-contracts\tss-process-contracts.csproj" />
-    <ProjectReference Include="..\tss-process-api-client\tss-process-api-client.csproj" />
+    <ProjectReference Include="../tss-process-step-server-core/tss-process-step-server-core.csproj" />
+    <ProjectReference Include="../../core/tss-process-contracts/tss-process-contracts.csproj" />
+    <ProjectReference Include="../../process-server/tss-process-server-client/tss-process-server-client.csproj" />
   </ItemGroup>
 
 </Project>
